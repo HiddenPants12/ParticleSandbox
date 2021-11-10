@@ -3,6 +3,7 @@ var world = new b2World(gravity);
 var windowWidth = window.innerWidth;
 var windowHeight = window.innerHeight;
 var camera = new THREE.PerspectiveCamera(7, windowWidth / windowHeight, 1, 1000);
+var wallSize = 2;
 
 camera.position.x = 0;
 camera.position.y = 0;
@@ -105,13 +106,31 @@ document.addEventListener('touchend', mouseUp);
 document.addEventListener('mouseup', mouseUp);
 
 var keyDown = function (event) {
-    if (event.key = ' ') {
+    if (event.key == ' ') {
         var particleGroupDef = new b2ParticleGroupDef();
         particleGroupDef.shape = box;
         particleGroupDef.color = new b2ParticleColor(0, 0, 255);
         particleGroupDef.positionData = (mousePos);
         particleGroupDef.shapeCount = 1;
         particleSystem.CreateParticleGroup(particleGroupDef);
+    }
+
+    if (event.key == 'x') {
+        timeStep = timeStep * 60 * 2 / 60
+    }
+
+    if (event.key == 'z') {
+        timeStep = timeStep * 60 / 2 / 60;
+    }
+
+    if (event.key == '[') {
+        console.log("Mass is now " + tb.GetMass() * 2);
+        tb.SetMassData(new b2MassData(tb.GetMass() * 2, new b2Vec2(0, 0), 0));
+    }
+
+    if (event.key == ']') {
+        console.log("Mass is now " + tb.GetMass() / 2);
+        tb.SetMassData(new b2MassData(tb.GetMass() / 2, new b2Vec2(0, 0), 0));
     }
 }
 
@@ -139,7 +158,7 @@ function setCamZ(val) {
 }
 
 camera.position.y = 0;
-camera.position.z = 100;
+camera.position.z = 40;
 
 var bd = new b2BodyDef();
 var ground = world.CreateBody(bd);
@@ -150,19 +169,19 @@ var body = world.CreateBody(bd);
 g_groundBody = ground;
 
 var b1 = new b2PolygonShape();
-b1.SetAsBoxXYCenterAngle(0.05, 5, new b2Vec2(10, 0), 0);
+b1.SetAsBoxXYCenterAngle(0.05, wallSize, new b2Vec2(wallSize * 2, 0), 0);
 body.CreateFixtureFromShape(b1, 5);
 
 var b2 = new b2PolygonShape();
-b2.SetAsBoxXYCenterAngle(0.05, 5, new b2Vec2(-10, 0), 0);
+b2.SetAsBoxXYCenterAngle(0.05, wallSize, new b2Vec2(-wallSize * 2, 0), 0);
 body.CreateFixtureFromShape(b2, 5);
 
 var b3 = new b2PolygonShape();
-b3.SetAsBoxXYCenterAngle(10, 0.05, new b2Vec2(0, 5), 0);
+b3.SetAsBoxXYCenterAngle(wallSize * 2, 0.05, new b2Vec2(0, wallSize), 0);
 body.CreateFixtureFromShape(b3, 5);
 
 var b4 = new b2PolygonShape();
-b4.SetAsBoxXYCenterAngle(10, 0.05, new b2Vec2(0, -5), 0);
+b4.SetAsBoxXYCenterAngle(wallSize * 2, 0.05, new b2Vec2(0, -wallSize), 0);
 body.CreateFixtureFromShape(b4, 5);
 
 // Start particle system
@@ -186,7 +205,6 @@ var testingBodyDef = new b2BodyDef();
 testingBodyDef.type = b2_dynamicBody;
 testingBodyDef.position.Set(3, 0);
 var tb = world.CreateBody(testingBodyDef);
-tb.SetMassData(new b2MassData(100, new b2Vec2(0, 0), 0));
 var tbFixture = new b2CircleShape
 tbFixture.position.Set(0, 0);
 tbFixture.radius = 0.4;
