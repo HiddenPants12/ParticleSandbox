@@ -10,8 +10,26 @@
     <script src="liquidfun/three.js"></script>
     <script src="liquidfun/testbed.js"></script>
     <script src="liquidfun/utils.js"></script>
+
+    <style type="text/css">
+        spawnMenu {
+            position: fixed;
+            left: 0;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 5000;
+        }
+    </style>
 </head>
-<body style="overflow: hidden;">
+<body style="overflow: hidden;" oncontextmenu="return false;">
     <script src="index.js"></script>
+
+    <div id="spawnMenu" style="position: fixed; right: 0px; top: 0px; width: 20%; height: 100%; z-index: 100000; background-color: rgba(0, 0, 0, 0.5); visibility: hidden;">
+        <div id="spawnMenuSizeValue">
+            <input type="text" id="name" name="name" required="4" maxlength="8" size="10">
+        </div>
+    </div>
 </body>
 </html>

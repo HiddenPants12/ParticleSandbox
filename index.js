@@ -28,6 +28,13 @@ var that = this;
 var g_groundBody = null;
 
 var mousePos = null;
+var startMousePos = null;
+var endMousePos = null;
+
+window.addEventListener('contextmenu', function (ev) {
+    ev.preventDefault();
+    return false;
+}, false);
 
 var lastMouseEvent = null;
 function getMouseCoords(event) {
@@ -66,7 +73,7 @@ var mouseDown = function (event) {
     var queryCallback = new QueryCallback(p);
     world.QueryAABB(queryCallback, aabb);
 
-    if (queryCallback.fixture) {
+    if (queryCallback.fixture && event.which == 1) {
         var body = queryCallback.fixture.body;
         var md = new b2MouseJointDef;
         md.bodyA = g_groundBody;
@@ -75,6 +82,9 @@ var mouseDown = function (event) {
         md.maxForce = 1000 * body.GetMass();
         that.mouseJoint = world.CreateJoint(md);
         body.SetAwake(true);
+    } else if (event.which == 3) {
+        startMousePos = p;
+        console.log(event.which)
     }
     if (test.MouseDown !== undefined) {
         test.MouseDown(p);
@@ -85,8 +95,8 @@ document.addEventListener('touchstart', mouseDown);
 document.addEventListener('mousedown', mouseDown);
 
 var mouseMove = function (event) {
+    var p = getMouseCoords(event);
     if (mouseJoint) {
-        var p = getMouseCoords(event);
         mouseJoint.SetTarget(p);
     }
 };
@@ -98,8 +108,23 @@ var mouseUp = function (event) {
         world.DestroyJoint(that.mouseJoint);
         that.mouseJoint = null;
     }
-    if (test.MouseUp !== undefined) {
-        test.MouseUp(getMouseCoords(event));
+    if (startMousePos) {
+        endMousePos = getMouseCoords(event);
+        if (Math.abs(endMousePos.x - startMousePos.x) < 0.1 || Math.abs(endMousePos.y - startMousePos.y) < 0.1) {
+            console.log(new b2Vec2(Math.abs(startMousePos.x - endMousePos.x), Math.abs(startMousePos.y - endMousePos.y)))
+            return;
+        }
+        var b = new b2BodyDef();
+        b.type = b2_staticBody;
+        b.position.Set(0, 0);
+        var tb = world.CreateBody(testingBodyDef);
+        var tbFixture = new b2PolygonShape();
+        tbFixture.SetAsBoxXYCenterAngle(Math.abs(startMousePos.x - endMousePos.x) / 2, Math.abs(startMousePos.y - endMousePos.y) / 2, new b2Vec2(endMousePos.x - 3, endMousePos.y), 0);
+        console.log(new b2Vec2((startMousePos.x + endMousePos.x) / 2, (startMousePos.y + endMousePos.y) / 2));
+        console.log(startMousePos)
+        tb.CreateFixtureFromShape(tbFixture, 100);
+        startMousePos = null;
+        endMousePos = null;
     }
 };
 document.addEventListener('touchend', mouseUp);
@@ -107,11 +132,15 @@ document.addEventListener('mouseup', mouseUp);
 
 var keyDown = function (event) {
     if (event.key == ' ') {
+        var box = new b2PolygonShape();
+        box.SetAsBoxXYCenterAngle(0.9, 0.9, mousePos, 0);
         var particleGroupDef = new b2ParticleGroupDef();
         particleGroupDef.shape = box;
         particleGroupDef.color = new b2ParticleColor(0, 0, 255);
         particleGroupDef.positionData = (mousePos);
         particleGroupDef.shapeCount = 1;
+        particleGroupDef.strength = 1
+        particleGroupDef.flags = b2_waterParticle;
         particleSystem.CreateParticleGroup(particleGroupDef);
     }
 
@@ -188,27 +217,17 @@ body.CreateFixtureFromShape(b4, 5);
 var psd = new b2ParticleSystemDef();
 psd.radius = 0.025;
 psd.dampingStrength = 0;
-psd.maxCount = 10000000;
-
 var particleSystem = world.CreateParticleSystem(psd);
-
-var box = new b2PolygonShape();
-box.SetAsBoxXYCenterAngle(0.9, 0.9, new b2Vec2(0, 1.0), 0);
-
-var particleGroupDef = new b2ParticleGroupDef();
-particleGroupDef.shape = box;
-particleGroupDef.shapeCount = 1;
-particleGroupDef.color = new b2ParticleColor(0, 0, 255);
-var particleGroup = particleSystem.CreateParticleGroup(particleGroupDef);
 
 var testingBodyDef = new b2BodyDef();
 testingBodyDef.type = b2_dynamicBody;
 testingBodyDef.position.Set(3, 0);
-var tb = world.CreateBody(testingBodyDef);
-var tbFixture = new b2CircleShape
+/*var tb = world.CreateBody(testingBodyDef);
+var tbFixture = new b2CircleShape;
 tbFixture.position.Set(0, 0);
 tbFixture.radius = 0.4;
 tb.CreateFixtureFromShape(tbFixture, 1);
+*/
 
 world.SetGravity(new b2Vec2(0, -9.82));
 
