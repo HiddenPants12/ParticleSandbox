@@ -26,6 +26,15 @@ var planeZ = new THREE.Plane(new THREE.Vector3(0, 0, 1), 0);
 this.mouseJoint = null;
 var that = this;
 var g_groundBody = null;
+var customWallMass = 100;
+var currentFlag = 0;
+var currentStrength = 1;
+var flags = [
+    b2_waterParticle,
+    b2_viscousParticle,
+    b2_elasticParticle,
+    b2_springParticle
+]
 
 var mousePos = null;
 var startMousePos = null;
@@ -122,7 +131,7 @@ var mouseUp = function (event) {
         tbFixture.SetAsBoxXYCenterAngle(Math.abs(startMousePos.x - endMousePos.x) / 2, Math.abs(startMousePos.y - endMousePos.y) / 2, new b2Vec2(endMousePos.x - 3, endMousePos.y), 0);
         console.log(new b2Vec2((startMousePos.x + endMousePos.x) / 2, (startMousePos.y + endMousePos.y) / 2));
         console.log(startMousePos)
-        tb.CreateFixtureFromShape(tbFixture, 100);
+        tb.CreateFixtureFromShape(tbFixture, customWallMass);
         startMousePos = null;
         endMousePos = null;
     }
@@ -139,8 +148,8 @@ var keyDown = function (event) {
         particleGroupDef.color = new b2ParticleColor(0, 0, 255);
         particleGroupDef.positionData = (mousePos);
         particleGroupDef.shapeCount = 1;
-        particleGroupDef.strength = 1
-        particleGroupDef.flags = b2_waterParticle;
+        particleGroupDef.strength = currentStrength;
+        particleGroupDef.flags = flags[currentFlag];
         particleSystem.CreateParticleGroup(particleGroupDef);
     }
 
@@ -153,13 +162,41 @@ var keyDown = function (event) {
     }
 
     if (event.key == '[') {
-        console.log("Mass is now " + tb.GetMass() * 2);
         tb.SetMassData(new b2MassData(tb.GetMass() * 2, new b2Vec2(0, 0), 0));
     }
 
     if (event.key == ']') {
-        console.log("Mass is now " + tb.GetMass() / 2);
         tb.SetMassData(new b2MassData(tb.GetMass() / 2, new b2Vec2(0, 0), 0));
+    }
+    
+    if (event.key == ',') {
+        customWallMass = customWallMass / 1.5;
+    }
+
+    if (event.key == '.') {
+        customWallMass = customWallMass * 1.5;
+    }
+    
+    if (event.key == 'q') {
+        currentFlag--;
+        if (currentFlag == -1) {
+            currentFlag = flags.length - 1;
+        }
+    }
+
+    if (event.key == 'w') {
+        currentFlag++;
+        if (currentFlag == flags.length) {
+            currentFlag = 0;
+        }
+    }
+    
+    if (event.key == 't') {
+        currentStrength = currentStrength / 1.1;
+    }
+
+    if (event.key == 'y') {
+        currentStrength = currentStrength * 1.1;
     }
 }
 
