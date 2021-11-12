@@ -239,32 +239,30 @@ bd.type = b2_kinematicBody;
 var ground = world.CreateBody(bd);
 bd.type = b2_kinematicBody;
 bd.position.Set(0, 0);
-var body = world.CreateBody(bd);
+var groundMainBody = world.CreateBody(bd);
 g_groundBody = ground;
 
 var b1 = new b2PolygonShape();
 b1.SetAsBoxXYCenterAngle(0.05, wallSize, new b2Vec2(wallSize * 2, 0), 0);
-body.CreateFixtureFromShape(b1, 5);
+groundMainBody.CreateFixtureFromShape(b1, 5);
 
 var b2 = new b2PolygonShape();
 b2.SetAsBoxXYCenterAngle(0.05, wallSize, new b2Vec2(-wallSize * 2, 0), 0);
-body.CreateFixtureFromShape(b2, 5);
+groundMainBody.CreateFixtureFromShape(b2, 5);
 
 var b3 = new b2PolygonShape();
 b3.SetAsBoxXYCenterAngle(wallSize * 2, 0.05, new b2Vec2(0, wallSize), 0);
-body.CreateFixtureFromShape(b3, 5);
+groundMainBody.CreateFixtureFromShape(b3, 5);
 
 var b4 = new b2PolygonShape();
 b4.SetAsBoxXYCenterAngle(wallSize * 2, 0.05, new b2Vec2(0, -wallSize), 0);
-body.CreateFixtureFromShape(b4, 5);
+groundMainBody.CreateFixtureFromShape(b4, 5);
 
 // Start particle system
 var psd = new b2ParticleSystemDef();
 psd.radius = 0.025;
 psd.dampingStrength = 0;
 var particleSystem = world.CreateParticleSystem(psd);
-
-var groundMainBody = body;
 
 var testingBodyDef = new b2BodyDef();
 testingBodyDef.type = b2_dynamicBody;
