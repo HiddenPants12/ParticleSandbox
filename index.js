@@ -239,6 +239,7 @@ bd.type = b2_kinematicBody;
 var ground = world.CreateBody(bd);
 bd.type = b2_kinematicBody;
 bd.position.Set(0, 0);
+bd.fixedRotation = false;
 var groundMainBody = world.CreateBody(bd);
 g_groundBody = ground;
 
