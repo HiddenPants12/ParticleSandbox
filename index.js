@@ -236,7 +236,7 @@ camera.position.z = 40;
 
 var bd = new b2BodyDef();
 var ground = world.CreateBody(bd);
-bd.type = b2_staticBody;
+bd.type = b2_dynamicBody;
 bd.allowSleep = false;
 bd.position.Set(0, 0);
 var body = world.CreateBody(bd);
