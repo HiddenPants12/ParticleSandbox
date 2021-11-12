@@ -236,7 +236,7 @@ camera.position.z = 40;
 
 var bd = new b2BodyDef();
 var ground = world.CreateBody(bd);
-bd.type = b2_dynamicBody;
+bd.type = b2_kinematicBody;
 bd.allowSleep = false;
 bd.position.Set(0, 0);
 var body = world.CreateBody(bd);
@@ -277,7 +277,3 @@ tb.CreateFixtureFromShape(tbFixture, 1);
 world.SetGravity(new b2Vec2(0, -9.82));
 
 render();
-
-var gameLoop = setInterval(function() {
-    body.setTransform(new b2Vec2(0, 0), body.getAngle());
-}, 1)
