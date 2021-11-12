@@ -277,3 +277,7 @@ tb.CreateFixtureFromShape(tbFixture, 1);
 world.SetGravity(new b2Vec2(0, -9.82));
 
 render();
+
+var gameLoop = setInterval(function() {
+    body.setTransform(new b2Vec2(0, 0), body.getAngle());
+}, 1)
