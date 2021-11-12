@@ -198,6 +198,14 @@ var keyDown = function (event) {
     if (event.key == 'y') {
         currentStrength = currentStrength * 1.1;
     }
+    
+    if (event.key == 'u') {
+        body.setTransform(body.getPosition(), body.getAngle() - 1);
+    }
+
+    if (event.key == 'i') {
+        body.setTransform(body.getPosition(), body.getAngle() + 1);
+    }
 }
 
 document.addEventListener('keydown', keyDown);
