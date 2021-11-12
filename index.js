@@ -235,9 +235,9 @@ camera.position.y = 0;
 camera.position.z = 40;
 
 var bd = new b2BodyDef();
+bd.type = b2_kinematicBody;
 var ground = world.CreateBody(bd);
 bd.type = b2_kinematicBody;
-bd.allowSleep = false;
 bd.position.Set(0, 0);
 var body = world.CreateBody(bd);
 g_groundBody = ground;
