@@ -200,11 +200,11 @@ var keyDown = function (event) {
     }
     
     if (event.key == 'u') {
-        groundMainBody.setTransform(new b2Vec2(0, 0), body.getAngle() - 1);
+        groundMainBody.setTransform(new b2Vec2(0, 0), groundMainBody.getAngle() - 1);
     }
 
     if (event.key == 'i') {
-        groundMainBody.setTransform(new b2Vec2(0, 0), body.getAngle() + 1);
+        groundMainBody.setTransform(new b2Vec2(0, 0), groundMainBody.getAngle() + 1);
     }
 }
 
