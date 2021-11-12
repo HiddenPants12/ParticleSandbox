@@ -200,11 +200,11 @@ var keyDown = function (event) {
     }
     
     if (event.key == 'u') {
-        body.setTransform(body.getPosition(), body.getAngle() - 1);
+        groundMainBody.setTransform(new b2Vec2(0, 0), body.getAngle() - 1);
     }
 
     if (event.key == 'i') {
-        body.setTransform(body.getPosition(), body.getAngle() + 1);
+        groundMainBody.setTransform(new b2Vec2(0, 0), body.getAngle() + 1);
     }
 }
 
@@ -263,6 +263,8 @@ var psd = new b2ParticleSystemDef();
 psd.radius = 0.025;
 psd.dampingStrength = 0;
 var particleSystem = world.CreateParticleSystem(psd);
+
+var groundMainBody = body;
 
 var testingBodyDef = new b2BodyDef();
 testingBodyDef.type = b2_dynamicBody;
