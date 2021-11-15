@@ -162,7 +162,6 @@ var mouseUp = function (event) {
         var tbFixture = new b2PolygonShape();
 
         tbFixture.SetAsBoxXYCenterAngle(Math.abs(startMousePos.x - endMousePos.x) / 2, Math.abs(startMousePos.y - endMousePos.y) / 2, new b2Vec2((endMousePos.x + startMousePos.x) / 2, (endMousePos.y + startMousePos.y) / 2), 0);
-        tbFixture.SetAsBoxXYCenterAngle(Math.abs(startMousePos.x - endMousePos.x) / 2, Math.abs(startMousePos.y - endMousePos.y) / 2, new b2Vec2(endMousePos.x - 3, endMousePos.y), 0);
 
         tb.CreateFixtureFromShape(tbFixture, customWallMass);
         startMousePos = null;
