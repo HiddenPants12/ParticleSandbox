@@ -29,15 +29,12 @@ var g_groundBody = null;
 var customWallMass = 100;
 var currentFlag = 0;
 var currentStrength = 1;
-<<<<<<< HEAD
 var turnDown = false;
 var turnKey = 0;
 var customWallState = b2_dynamicBody;
 var holdingParticle = false;
 var particleHolding = null;
 
-=======
->>>>>>> 9794505eb06fe88d06789ab9b1c766ad7f7ee713
 var flags = [
     b2_waterParticle,
     b2_viscousParticle,
@@ -163,13 +160,10 @@ var mouseUp = function (event) {
         b.type = customWallState;
         var tb = world.CreateBody(b);
         var tbFixture = new b2PolygonShape();
-<<<<<<< HEAD
+
         tbFixture.SetAsBoxXYCenterAngle(Math.abs(startMousePos.x - endMousePos.x) / 2, Math.abs(startMousePos.y - endMousePos.y) / 2, new b2Vec2((endMousePos.x + startMousePos.x) / 2, (endMousePos.y + startMousePos.y) / 2), 0);
-=======
         tbFixture.SetAsBoxXYCenterAngle(Math.abs(startMousePos.x - endMousePos.x) / 2, Math.abs(startMousePos.y - endMousePos.y) / 2, new b2Vec2(endMousePos.x - 3, endMousePos.y), 0);
-        console.log(new b2Vec2((startMousePos.x + endMousePos.x) / 2, (startMousePos.y + endMousePos.y) / 2));
-        console.log(startMousePos)
->>>>>>> 9794505eb06fe88d06789ab9b1c766ad7f7ee713
+
         tb.CreateFixtureFromShape(tbFixture, customWallMass);
         startMousePos = null;
         endMousePos = null;
@@ -180,11 +174,10 @@ document.addEventListener('mouseup', mouseUp);
 
 var keyDown = function (event) {
     if (event.key == ' ') {
-<<<<<<< HEAD
         if (!startSpacePos) {
             startSpacePos = mousePos;
         }
-=======
+        
         var box = new b2PolygonShape();
         box.SetAsBoxXYCenterAngle(0.9, 0.9, mousePos, 0);
         var particleGroupDef = new b2ParticleGroupDef();
@@ -195,7 +188,6 @@ var keyDown = function (event) {
         particleGroupDef.strength = currentStrength;
         particleGroupDef.flags = flags[currentFlag];
         particleSystem.CreateParticleGroup(particleGroupDef);
->>>>>>> 9794505eb06fe88d06789ab9b1c766ad7f7ee713
     }
 
     if (event.key == 'x') {
@@ -213,11 +205,7 @@ var keyDown = function (event) {
     if (event.key == ']') {
         tb.SetMassData(new b2MassData(tb.GetMass() / 2, new b2Vec2(0, 0), 0));
     }
-<<<<<<< HEAD
-
-=======
     
->>>>>>> 9794505eb06fe88d06789ab9b1c766ad7f7ee713
     if (event.key == ',') {
         customWallMass = customWallMass / 1.5;
     }
@@ -225,11 +213,7 @@ var keyDown = function (event) {
     if (event.key == '.') {
         customWallMass = customWallMass * 1.5;
     }
-<<<<<<< HEAD
 
-=======
-    
->>>>>>> 9794505eb06fe88d06789ab9b1c766ad7f7ee713
     if (event.key == 'q') {
         currentFlag--;
         if (currentFlag == -1) {
@@ -243,11 +227,7 @@ var keyDown = function (event) {
             currentFlag = 0;
         }
     }
-<<<<<<< HEAD
-
-=======
     
->>>>>>> 9794505eb06fe88d06789ab9b1c766ad7f7ee713
     if (event.key == 't') {
         currentStrength = currentStrength / 1.1;
     }
@@ -255,7 +235,6 @@ var keyDown = function (event) {
     if (event.key == 'y') {
         currentStrength = currentStrength * 1.1;
     }
-<<<<<<< HEAD
 
     if (event.key == 'u') {
         turnDown = true;
@@ -379,7 +358,6 @@ tb.CreateFixtureFromShape(tbFixture, 1);
 world.SetGravity(new b2Vec2(0, -9.82));
 
 render();
-<<<<<<< HEAD
 
 var gameLoop = setInterval(function () {
     if (holdingParticle) {
