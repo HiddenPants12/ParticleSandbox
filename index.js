@@ -177,17 +177,6 @@ var keyDown = function (event) {
         if (!startSpacePos) {
             startSpacePos = mousePos;
         }
-        
-        var box = new b2PolygonShape();
-        box.SetAsBoxXYCenterAngle(0.9, 0.9, mousePos, 0);
-        var particleGroupDef = new b2ParticleGroupDef();
-        particleGroupDef.shape = box;
-        particleGroupDef.color = new b2ParticleColor(0, 0, 255);
-        particleGroupDef.positionData = (mousePos);
-        particleGroupDef.shapeCount = 1;
-        particleGroupDef.strength = currentStrength;
-        particleGroupDef.flags = flags[currentFlag];
-        particleSystem.CreateParticleGroup(particleGroupDef);
     }
 
     if (event.key == 'x') {
