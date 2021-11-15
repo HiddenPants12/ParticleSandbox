@@ -311,7 +311,7 @@ function setCamZ(val) {
 }
 
 camera.position.y = 0;
-camera.position.z = 50;
+camera.position.z = 100;
 
 var bd = new b2BodyDef();
 bd.type = b2_kinematicBody;
