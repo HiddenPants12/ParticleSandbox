@@ -156,12 +156,12 @@ var mouseUp = function (event) {
             return;
         }
         var b = new b2BodyDef();
-        b.position.Set(0, 0);
+        b.position.Set((endMousePos.x + startMousePos.x) / 2, (endMousePos.y + startMousePos.y) / 2);
         b.type = customWallState;
         var tb = world.CreateBody(b);
         var tbFixture = new b2PolygonShape();
 
-        tbFixture.SetAsBoxXYCenterAngle(Math.abs(startMousePos.x - endMousePos.x) / 2, Math.abs(startMousePos.y - endMousePos.y) / 2, new b2Vec2((endMousePos.x + startMousePos.x) / 2, (endMousePos.y + startMousePos.y) / 2), 0);
+        tbFixture.SetAsBox(Math.abs(endMousePox.x - startMousePos.x), Math.abs(endMousePos.y - startMousePos.y));
 
         tb.CreateFixtureFromShape(tbFixture, customWallMass);
         startMousePos = null;
