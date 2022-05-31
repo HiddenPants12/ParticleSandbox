@@ -161,7 +161,7 @@ var mouseUp = function (event) {
         var tb = world.CreateBody(b);
         var tbFixture = new b2PolygonShape();
 
-        tbFixture.SetAsBoxAABB(Math.abs(endMousePox.x - startMousePos.x), Math.abs(endMousePos.y - startMousePos.y));
+        tbFixture.SetAsBoxXYCenterAngle(Math.abs(endMousePox.x - startMousePos.x), Math.abs(endMousePos.y - startMousePos.y));
 
         tb.CreateFixtureFromShape(tbFixture, customWallMass);
         startMousePos = null;
