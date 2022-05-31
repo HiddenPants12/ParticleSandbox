@@ -153,7 +153,7 @@ var mouseUp = function (event) {
     if (startMousePos) {
         endMousePos = getMouseCoords(event);
         if (Math.abs(endMousePos.x - startMousePos.x) < 0.1 || Math.abs(endMousePos.y - startMousePos.y) < 0.1) {
-            return;
+            //areturn;
         }
         var b = new b2BodyDef();
         b.position.Set((endMousePos.x + startMousePos.x) / 2, (endMousePos.y + startMousePos.y) / 2);
