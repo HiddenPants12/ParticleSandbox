@@ -153,16 +153,16 @@ var mouseUp = function (event) {
     if (startMousePos) {
         endMousePos = getMouseCoords(event);
         if (Math.abs(endMousePos.x - startMousePos.x) < 0.1 || Math.abs(endMousePos.y - startMousePos.y) < 0.1) {
-            //areturn;
+            return;
         }
         var b = new b2BodyDef();
         var pos = new b2Vec2((endMousePos.x + startMousePos.x) / 2, (endMousePos.y + startMousePos.y) / 2);
-        b.position.Set(pos);
+        b.position.Set(pos.x, pos.y);
         b.type = customWallState;
         var tb = world.CreateBody(b);
         var tbFixture = new b2PolygonShape();
-
-        tbFixture.SetAsBoxXYCenterAngle(Math.abs(endMousePox.x - startMousePos.x), Math.abs(endMousePos.y - startMousePos.y), pos, 0);
+        console.log(tbFixture.SetAsBoxXYCenterAngle)
+        tbFixture.SetAsBoxXYCenterAngle(Math.abs(endMousePos.x - startMousePos.x) / 2, Math.abs(endMousePos.y - startMousePos.y) / 2, new b2Vec2(0, 0), 0);
 
         tb.CreateFixtureFromShape(tbFixture, customWallMass);
         startMousePos = null;
